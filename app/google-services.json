@@ -1,0 +1,122 @@
+{
+  "project_info": {
+    "project_number": "13739318963",
+    "firebase_url": "https://minhaagenda-1aaa8.firebaseio.com",
+    "project_id": "minhaagenda-1aaa8",
+    "storage_bucket": "minhaagenda-1aaa8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13739318963:android:c9a2f7dfed212d5c471ac6",
+        "android_client_info": {
+          "package_name": "com.humbertobioca.LoginFB"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "13739318963-ancsfj7gsoepcggp5tgq8u5l9v129haq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.humbertobioca.LoginFB",
+            "certificate_hash": "d248e1d9a6b0c3b863a9efd6310694545d6adf3a"
+          }
+        },
+        {
+          "client_id": "13739318963-cq66ob7qaa8a0e6qf1jeckgcnmqtp4eg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCy_Y3mWfOANcPXw00Ui021XQ81PMSwqKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "13739318963-cq66ob7qaa8a0e6qf1jeckgcnmqtp4eg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13739318963:android:49ee19bbeb89c513471ac6",
+        "android_client_info": {
+          "package_name": "com.humbertobioca.minhaagenda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "13739318963-ggdv369a59vgqbdmjhg7i36tnhv1n1sb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.humbertobioca.minhaagenda",
+            "certificate_hash": "d248e1d9a6b0c3b863a9efd6310694545d6adf3a"
+          }
+        },
+        {
+          "client_id": "13739318963-cq66ob7qaa8a0e6qf1jeckgcnmqtp4eg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCy_Y3mWfOANcPXw00Ui021XQ81PMSwqKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "13739318963-cq66ob7qaa8a0e6qf1jeckgcnmqtp4eg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13739318963:android:5689c9a118873ce2471ac6",
+        "android_client_info": {
+          "package_name": "com.humbertobioca.whr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "13739318963-jb8faa53k06aktc017v5c5lve34r9va4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.humbertobioca.whr",
+            "certificate_hash": "d248e1d9a6b0c3b863a9efd6310694545d6adf3a"
+          }
+        },
+        {
+          "client_id": "13739318963-cq66ob7qaa8a0e6qf1jeckgcnmqtp4eg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCy_Y3mWfOANcPXw00Ui021XQ81PMSwqKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "13739318963-cq66ob7qaa8a0e6qf1jeckgcnmqtp4eg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
