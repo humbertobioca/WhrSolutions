@@ -22,7 +22,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.humbertobioca.whr.Components.AlertDialog;
 import com.humbertobioca.whr.R;
+
+import java.io.Console;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -51,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
+    private AlertDialog alertDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +63,9 @@ public class LoginActivity extends AppCompatActivity {
 
         //Firebase
         mAuth = FirebaseAuth.getInstance();
+
+        alertDialog = new AlertDialog();
+
 
         //Login View
         btnLogin = (BootstrapButton) findViewById(R.id.btnLogin);
@@ -93,45 +101,46 @@ public class LoginActivity extends AppCompatActivity {
         txtRecoveryPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                abrirDialog();
+                alertDialog.abrirDialogEmail(LoginActivity.this);
             }
         });
 
 
-
     }
 
-    private void EfetuarLogin(String email, String password){
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+    private void EfetuarLogin(String email, String password) {
+        final AlertDialog alertDialog = new AlertDialog();
+        alertDialog.abrirLoading("Aguarde um momento...", LoginActivity.this);
 
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("TAG", "signInWithEmail:success");
-                            Toast.makeText(LoginActivity.this, "Login Efetuado com Sucesso!", Toast.LENGTH_LONG).show();
-                            abrirMainActivity();
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 
-
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("TAG", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("TAG", "signInWithEmail:success");
+                                Toast.makeText(LoginActivity.this, "Login Efetuado com Sucesso!", Toast.LENGTH_LONG).show();
+                                alertDialog.fecharLoading();
+                                abrirMainActivity();
 
 
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("TAG", "signInWithEmail:failure", task.getException());
+                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+
+                                alertDialog.fecharLoading();
+                            }
+
+                            // ...
                         }
-
-                        // ...
-                    }
-                });
+                    });
 
     }
 
-
-    private void abrirCadastro(){
+    private void abrirCadastro() {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(intent);
         finish();
@@ -145,67 +154,19 @@ public class LoginActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         currentUser = mAuth.getCurrentUser();
 
-        if(currentUser != null) {
+        if (currentUser != null) {
             abrirMainActivity();
         }
 
     }
 
-    private void abrirMainActivity(){
+    private void abrirMainActivity() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
-    private void abrirDialog(){
-        dialog = new Dialog(LoginActivity.this);
-
-        dialog.setContentView(R.layout.alert_recovery_password);
-
-        //Alert
-        btnSendEmail = (BootstrapButton) dialog.findViewById(R.id.btnSendEmail);
-        btnCancelAlert = (BootstrapButton) dialog.findViewById(R.id.btnCancelAlert);
-        edtEmailAlert = (BootstrapEditText) dialog.findViewById(R.id.edtEmailAlert);
-
-        btnSendEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Envio de email para restauracao de senha.
-                enviarEmail(edtEmailAlert.getText().toString());
-                dialog.dismiss();
-            }
-        });
-
-        btnCancelAlert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-
-    }
-
-    private void enviarEmail(String emailAddress){
-
-        mAuth = FirebaseAuth.getInstance();
-
-        mAuth.sendPasswordResetEmail(emailAddress)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Email enviado com sucesso", Toast.LENGTH_LONG).show();
-                        }else {
-                            Toast.makeText(LoginActivity.this, "Email nao existe.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-    }
-
-    private void verificarPermissoes(){
+    private void verificarPermissoes() {
 
         // Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(this,

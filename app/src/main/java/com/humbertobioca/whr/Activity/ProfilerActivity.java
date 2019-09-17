@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 
@@ -16,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.humbertobioca.whr.Components.AlertDialog;
 import com.humbertobioca.whr.Entidades.User;
 import com.humbertobioca.whr.R;
 
@@ -71,33 +73,39 @@ public class ProfilerActivity extends AppCompatActivity {
 
     }
 
-    private void popularDadosUsuario(){
+    private void popularDadosUsuario() {
+
+        final AlertDialog alertDialog = new AlertDialog();
+        alertDialog.abrirLoading("Aguarde um momento...", ProfilerActivity.this);
+
         mAuth = FirebaseAuth.getInstance();
 
-        userAuth  = mAuth.getCurrentUser();
+        userAuth = mAuth.getCurrentUser();
         String emailCurrentUser = userAuth.getEmail();
         reference = FirebaseDatabase.getInstance().getReference();
 
         reference.child("users").orderByChild("email").equalTo(emailCurrentUser).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
 
                     User user = userSnapshot.getValue(User.class);
                     edtNameProfiler.setText(user.getName());
                     edtEmailProfiler.setText(user.getEmail());
 
-                    if(user.getSex().equals("Masculino")){
+                    if (user.getSex().equals("Masculino")) {
                         rbMasc.setChecked(true);
-                    }else if (user.getSex().equals("Feminino")){
+                    } else if (user.getSex().equals("Feminino")) {
                         rbFem.setChecked(true);
                     }
                 }
+                alertDialog.fecharLoading();
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                alertDialog.fecharLoading();
             }
         });
 
