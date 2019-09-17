@@ -35,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.humbertobioca.whr.Components.AlertDialog;
 import com.humbertobioca.whr.Entidades.User;
 import com.humbertobioca.whr.R;
 import com.squareup.picasso.Picasso;
@@ -140,6 +141,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void criarConta(final User user) {
+        final AlertDialog alertDialog = new AlertDialog();
+        alertDialog.abrirLoading("Criando usuário...", RegisterActivity.this);
 
         mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -152,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
                             user.setUid(uid);
 
                             storageRef = storage.getReference();
-                            profilerRef = storageRef.child("profile/"+ uid +".jpg");
+                            profilerRef = storageRef.child("profile/" + uid + ".jpg");
 
                             // Get the data from an ImageView as bytes
                             imgPictureProfile.setDrawingCacheEnabled(true);
@@ -180,6 +183,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                     Toast.makeText(RegisterActivity.this, "Cadastro Efetuado!", Toast.LENGTH_SHORT).show();
                                     inserirUsuarioDatabase(user);
+                                    alertDialog.fecharLoading();
                                     abrirMainActivity();
                                 }
                             });
@@ -190,12 +194,12 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
 
+                            alertDialog.fecharLoading();
                         }
 
                         // ...
                     }
                 });
-
     }
 
     private void abrirMainActivity() {
