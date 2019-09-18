@@ -16,7 +16,14 @@ import android.view.View;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.humbertobioca.whr.Entidades.User;
 import com.humbertobioca.whr.R;
 import com.squareup.picasso.Picasso;
 
@@ -30,15 +37,23 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private TextView txtNameDrawer;
+    private TextView txtEmailDrawer;
+
     private ImageView imgPerfil;
+
+    private FirebaseStorage storage;
     private StorageReference storageRef;
-    private StorageReference storage;
+    private FirebaseAuth mAuth;
     private FirebaseUser userAuth;
+    private DatabaseReference reference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +63,11 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         imgPerfil = (ImageView) findViewById(R.id.imgPerfil);
+        txtNameDrawer = (TextView) findViewById(R.id.txtnameDrawer);
+        txtEmailDrawer = (TextView) findViewById(R.id.txtemailDrawer);
+
+        //preencherImagemPerfil();
+        //preencherDados();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -136,21 +156,52 @@ public class MainActivity extends AppCompatActivity
         finish();
     }
 
-    private void preencherImagemPerfil(){
+    private void preencherDados(){
+        mAuth = FirebaseAuth.getInstance();
+        String emailCurrentUser = mAuth.getCurrentUser().getEmail();
+
+        reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("users").orderByChild("email").equalTo(emailCurrentUser).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
+                    User user = userSnapshot.getValue(User.class);
+
+                    txtNameDrawer.setText(user.getName());
+                    txtEmailDrawer.setText(user.getEmail());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        preencherImagemPerfil();
+    }
+
+    private void preencherImagemPerfil() {
 
         userAuth = FirebaseAuth.getInstance().getCurrentUser();
         String uid = userAuth.getUid();
 
-        storageRef.child("profile/" + uid + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+
+        storageRef.child("profile/" + uid + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+
                 imgPerfil.setBackgroundColor(Color.TRANSPARENT);
                 Picasso.get().load(uri.toString()).into(imgPerfil);
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
+                Toast.makeText(MainActivity.this, "teste", Toast.LENGTH_SHORT).show();
             }
         });
     }

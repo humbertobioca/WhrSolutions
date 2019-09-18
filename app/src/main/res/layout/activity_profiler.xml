@@ -11,13 +11,19 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center">
+
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:id="@+id/imgPerfil2"
+                android:background="@drawable/ic_iconfinder_user_01_186382"/>
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
                 android:id="@+id/edtNameProfiler"

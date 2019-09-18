@@ -84,12 +84,13 @@ public class AlertDialog {
 
     }
 
-    public void exibirCritica(String critica, Activity activity){
+    public void exibirCritica(String critica, Activity activity) {
         dialog = new Dialog(activity);
-        dialog.setContentView(R.layout.alert_confirm);
+        dialog.setContentView(R.layout.alert_critica);
+        dialog.setCancelable(false);
 
-        txtDialogMessage = (TextView) dialog.findViewById(R.id.txtDialogMessageConfirm);
-      //  btnOk = (Button) dialog.findViewById(R.id.btnOk);
+        txtDialogMessageConfirm = (TextView) dialog.findViewById(R.id.txtDialogMessageCritica);
+        btnOk = (Button) dialog.findViewById(R.id.btnOk);
 
         txtDialogMessageConfirm.setText(critica);
 
@@ -97,12 +98,12 @@ public class AlertDialog {
         dialog.show();
 
 
-//        btnOk.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog.dismiss();
-//            }
-//        });
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
 

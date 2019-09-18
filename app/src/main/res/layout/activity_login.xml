@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.LoginActivity">
+    tools:context=".Activity.LoginActivity"
+    android:background="@color/colorBackgraundLogin">
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
         android:id="@+id/edtEmail"

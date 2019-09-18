@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +60,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
 
         //Firebase
@@ -79,7 +82,14 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EfetuarLogin(edtEmail.getText().toString(), edtPassword.getText().toString());
+
+                if (edtEmail.getText().toString().isEmpty()) {
+                    alertDialog.exibirCritica("O campo email e obrigatorio!", LoginActivity.this);
+                } else if (edtPassword.getText().toString().isEmpty()) {
+                    alertDialog.exibirCritica("O campo senha e obrigatorio!", LoginActivity.this);
+                } else {
+                    EfetuarLogin(edtEmail.getText().toString(), edtPassword.getText().toString());
+                }
             }
         });
 
@@ -112,31 +122,31 @@ public class LoginActivity extends AppCompatActivity {
         final AlertDialog alertDialog = new AlertDialog();
         alertDialog.abrirLoading("Aguarde um momento...", LoginActivity.this);
 
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
 
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d("TAG", "signInWithEmail:success");
-                                Toast.makeText(LoginActivity.this, "Login Efetuado com Sucesso!", Toast.LENGTH_LONG).show();
-                                alertDialog.fecharLoading();
-                                abrirMainActivity();
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("TAG", "signInWithEmail:success");
+                            Toast.makeText(LoginActivity.this, "Login Efetuado com Sucesso!", Toast.LENGTH_LONG).show();
+                            alertDialog.fecharLoading();
+                            abrirMainActivity();
 
 
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w("TAG", "signInWithEmail:failure", task.getException());
-                                Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("TAG", "signInWithEmail:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
 
-                                alertDialog.fecharLoading();
-                            }
-
-                            // ...
+                            alertDialog.fecharLoading();
                         }
-                    });
+
+                        // ...
+                    }
+                });
 
     }
 
