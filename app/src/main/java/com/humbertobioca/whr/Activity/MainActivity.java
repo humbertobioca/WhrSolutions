@@ -37,6 +37,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,8 +46,8 @@ public class MainActivity extends AppCompatActivity
 
     private TextView txtNameDrawer;
     private TextView txtEmailDrawer;
-
     private ImageView imgPerfil;
+    private LinearLayout lnlDrawerProfile;
 
     private FirebaseStorage storage;
     private StorageReference storageRef;
@@ -61,10 +62,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        imgPerfil = (ImageView) findViewById(R.id.imgPerfil);
-        txtNameDrawer = (TextView) findViewById(R.id.txtnameDrawer);
-        txtEmailDrawer = (TextView) findViewById(R.id.txtemailDrawer);
 
         //preencherImagemPerfil();
         //preencherDados();
@@ -87,6 +84,20 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View headView = navigationView.getHeaderView(0);
+        imgPerfil = (ImageView) headView.findViewById(R.id.imgPerfil);
+        txtNameDrawer = (TextView) headView.findViewById(R.id.txtNameDrawer);
+        txtEmailDrawer = (TextView) headView.findViewById(R.id.txtEmailDrawer);
+        lnlDrawerProfile = (LinearLayout) headView.findViewById(R.id.lnlDrawerProfile);
+
+        lnlDrawerProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrirProfileActivity();
+            }
+        });
+
+        preencherDados();
     }
 
     @Override
