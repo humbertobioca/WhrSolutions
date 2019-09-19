@@ -120,7 +120,7 @@ public class ProfilerActivity extends AppCompatActivity {
     private void popularDadosUsuario() {
 
         final Alerta alerta = new Alerta();
-        alerta.abrirLoading("Aguarde um momento...", ProfilerActivity.this);
+        alerta.loading("Aguarde um momento...", ProfilerActivity.this);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -144,13 +144,13 @@ public class ProfilerActivity extends AppCompatActivity {
                     }
                 }
 
-                alerta.fecharLoading();
+                alerta.fecharDialog();
             }
 
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                alerta.fecharLoading();
+                alerta.fecharDialog();
             }
         });
 

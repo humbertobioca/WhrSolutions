@@ -140,7 +140,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void criarConta(final User user) {
         final Alerta alerta = new Alerta();
-        alerta.abrirLoading("Criando usuário...", RegisterActivity.this);
+        alerta.loading("Criando usuário...", RegisterActivity.this);
 
         mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -181,7 +181,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                     Toast.makeText(RegisterActivity.this, "Cadastro Efetuado!", Toast.LENGTH_SHORT).show();
                                     inserirUsuarioDatabase(user);
-                                    alerta.fecharLoading();
+                                    alerta.fecharDialog();
                                     abrirMainActivity();
                                 }
                             });
@@ -192,7 +192,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
 
-                            alerta.fecharLoading();
+                            alerta.fecharDialog();
                         }
 
                         // ...

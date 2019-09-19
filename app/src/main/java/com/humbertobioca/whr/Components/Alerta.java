@@ -36,7 +36,7 @@ public class Alerta {
 
     }
 
-    public void abrirDialogEmail(final Activity activity) {
+    public void dialogEmail(final Activity activity) {
         dialog = new Dialog(activity);
 
         dialog.setContentView(R.layout.alert_recovery_password);
@@ -84,7 +84,7 @@ public class Alerta {
 
     }
 
-    public void exibirCritica(String critica, Activity activity) {
+    public void critica(String critica, Activity activity) {
         dialog = new Dialog(activity);
         dialog.setContentView(R.layout.alert_critica);
         dialog.setCancelable(false);
@@ -107,7 +107,7 @@ public class Alerta {
     }
 
 
-    public void abrirLoading(String message, Activity activity) {
+    public void loading(String message, Activity activity) {
         dialog = new Dialog(activity);
         dialog.setContentView(R.layout.alert_loading);
         dialog.setCancelable(false);
@@ -119,7 +119,7 @@ public class Alerta {
 
     }
 
-    public void fecharLoading() {
+    public void fecharDialog() {
         dialog.dismiss();
     }
 }

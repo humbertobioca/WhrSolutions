@@ -82,9 +82,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (edtEmail.getText().toString().isEmpty()) {
-                    alerta.exibirCritica("O campo email e obrigatorio!", LoginActivity.this);
+                    alerta.critica("O campo email e obrigatorio!", LoginActivity.this);
                 } else if (edtPassword.getText().toString().isEmpty()) {
-                    alerta.exibirCritica("O campo senha e obrigatorio!", LoginActivity.this);
+                    alerta.critica("O campo senha e obrigatorio!", LoginActivity.this);
                 } else {
                     EfetuarLogin(edtEmail.getText().toString(), edtPassword.getText().toString());
                 }
@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
         txtRecoveryPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alerta.abrirDialogEmail(LoginActivity.this);
+                alerta.dialogEmail(LoginActivity.this);
             }
         });
 
@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void EfetuarLogin(String email, String password) {
         final Alerta alerta = new Alerta();
-        alerta.abrirLoading("Aguarde um momento...", LoginActivity.this);
+        alerta.loading("Aguarde um momento...", LoginActivity.this);
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "signInWithEmail:success");
                             Toast.makeText(LoginActivity.this, "Login Efetuado com Sucesso!", Toast.LENGTH_LONG).show();
-                            alerta.fecharLoading();
+                            alerta.fecharDialog();
                             abrirMainActivity();
 
 
@@ -139,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
 
-                            alerta.fecharLoading();
+                            alerta.fecharDialog();
                         }
 
                         // ...
