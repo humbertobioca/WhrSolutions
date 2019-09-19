@@ -6,9 +6,9 @@ import com.humbertobioca.whr.R;
 
 import androidx.core.app.NotificationCompat;
 
-public class Notifications {
+public class Notificacao {
     private Notification.Builder notification;
-    public Notifications() {
+    public Notificacao() {
     }
 //
 //    exibirSimpleNotification(String title, String content){

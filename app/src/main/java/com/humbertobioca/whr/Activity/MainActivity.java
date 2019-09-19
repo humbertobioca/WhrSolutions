@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(MainActivity.this, "teste", Toast.LENGTH_SHORT).show();
+
             }
         });
     }

@@ -16,7 +16,7 @@ import com.humbertobioca.whr.R;
 
 import androidx.annotation.NonNull;
 
-public class AlertDialog {
+public class Alerta {
 
     private Dialog dialog;
 
@@ -32,7 +32,7 @@ public class AlertDialog {
 
     private FirebaseAuth mAuth;
 
-    public AlertDialog() {
+    public Alerta() {
 
     }
 

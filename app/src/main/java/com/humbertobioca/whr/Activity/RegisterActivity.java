@@ -1,7 +1,6 @@
 package com.humbertobioca.whr.Activity;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -18,7 +17,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
@@ -35,7 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.humbertobioca.whr.Components.AlertDialog;
+import com.humbertobioca.whr.Components.Alerta;
 import com.humbertobioca.whr.Entidades.User;
 import com.humbertobioca.whr.R;
 import com.squareup.picasso.Picasso;
@@ -141,8 +139,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void criarConta(final User user) {
-        final AlertDialog alertDialog = new AlertDialog();
-        alertDialog.abrirLoading("Criando usuário...", RegisterActivity.this);
+        final Alerta alerta = new Alerta();
+        alerta.abrirLoading("Criando usuário...", RegisterActivity.this);
 
         mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -183,7 +181,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                     Toast.makeText(RegisterActivity.this, "Cadastro Efetuado!", Toast.LENGTH_SHORT).show();
                                     inserirUsuarioDatabase(user);
-                                    alertDialog.fecharLoading();
+                                    alerta.fecharLoading();
                                     abrirMainActivity();
                                 }
                             });
@@ -194,7 +192,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
 
-                            alertDialog.fecharLoading();
+                            alerta.fecharLoading();
                         }
 
                         // ...

@@ -3,10 +3,10 @@ package com.humbertobioca.whr.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -24,7 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.humbertobioca.whr.Components.AlertDialog;
+import com.humbertobioca.whr.Components.Alerta;
 import com.humbertobioca.whr.Entidades.User;
 import com.humbertobioca.whr.R;
 import com.squareup.picasso.Picasso;
@@ -53,6 +53,8 @@ public class ProfilerActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference storageRef;
 
+    private Alerta alerta;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +72,7 @@ public class ProfilerActivity extends AppCompatActivity {
         rbFem = (RadioButton) findViewById(R.id.rbFemProfiler);
 
         imgPerfil = (ImageView) findViewById(R.id.imgPerfil2);
+        alerta = new Alerta();
 
         preencherImagemPerfil();
 
@@ -116,8 +119,8 @@ public class ProfilerActivity extends AppCompatActivity {
 
     private void popularDadosUsuario() {
 
-        final AlertDialog alertDialog = new AlertDialog();
-        alertDialog.abrirLoading("Aguarde um momento...", ProfilerActivity.this);
+        final Alerta alerta = new Alerta();
+        alerta.abrirLoading("Aguarde um momento...", ProfilerActivity.this);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -141,23 +144,24 @@ public class ProfilerActivity extends AppCompatActivity {
                     }
                 }
 
-                alertDialog.fecharLoading();
+                alerta.fecharLoading();
             }
 
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                alertDialog.fecharLoading();
+                alerta.fecharLoading();
             }
         });
 
     }
 
-    private void updateUser(String keyUser, String email, String name,  String sex,  String uid) {
+    private void updateUser(String email, String keyUser, String name,  String sex,  String uid) {
+
         reference = FirebaseDatabase.getInstance().getReference();
         reference.child("users");
 
-        User user = new User(keyUser, email, name, sex, uid);
+        User user = new User(email, keyUser,name, sex, uid);
 
         Map<String, Object> userValues = user.toMap();
         Map<String, Object> childUpdates = new HashMap<>();
@@ -165,7 +169,9 @@ public class ProfilerActivity extends AppCompatActivity {
         childUpdates.put("/users/" + keyUser, userValues);
 
         reference.updateChildren(childUpdates);
+
     }
+
 
     private void preencherImagemPerfil() {
 

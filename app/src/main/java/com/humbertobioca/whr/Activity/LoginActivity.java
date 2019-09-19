@@ -23,10 +23,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.humbertobioca.whr.Components.AlertDialog;
+import com.humbertobioca.whr.Components.Alerta;
 import com.humbertobioca.whr.R;
-
-import java.io.Console;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -55,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
-    private AlertDialog alertDialog;
+    private Alerta alerta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         //Firebase
         mAuth = FirebaseAuth.getInstance();
 
-        alertDialog = new AlertDialog();
+        alerta = new Alerta();
 
 
         //Login View
@@ -84,9 +82,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (edtEmail.getText().toString().isEmpty()) {
-                    alertDialog.exibirCritica("O campo email e obrigatorio!", LoginActivity.this);
+                    alerta.exibirCritica("O campo email e obrigatorio!", LoginActivity.this);
                 } else if (edtPassword.getText().toString().isEmpty()) {
-                    alertDialog.exibirCritica("O campo senha e obrigatorio!", LoginActivity.this);
+                    alerta.exibirCritica("O campo senha e obrigatorio!", LoginActivity.this);
                 } else {
                     EfetuarLogin(edtEmail.getText().toString(), edtPassword.getText().toString());
                 }
@@ -111,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
         txtRecoveryPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alertDialog.abrirDialogEmail(LoginActivity.this);
+                alerta.abrirDialogEmail(LoginActivity.this);
             }
         });
 
@@ -119,8 +117,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void EfetuarLogin(String email, String password) {
-        final AlertDialog alertDialog = new AlertDialog();
-        alertDialog.abrirLoading("Aguarde um momento...", LoginActivity.this);
+        final Alerta alerta = new Alerta();
+        alerta.abrirLoading("Aguarde um momento...", LoginActivity.this);
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -131,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "signInWithEmail:success");
                             Toast.makeText(LoginActivity.this, "Login Efetuado com Sucesso!", Toast.LENGTH_LONG).show();
-                            alertDialog.fecharLoading();
+                            alerta.fecharLoading();
                             abrirMainActivity();
 
 
@@ -141,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
 
-                            alertDialog.fecharLoading();
+                            alerta.fecharLoading();
                         }
 
                         // ...
